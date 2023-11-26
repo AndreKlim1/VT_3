@@ -3,6 +3,7 @@ package entity;
 public class Status implements Identifiable {
     private int id;
     private String name;
+    private int score;
 
     public Status() {
     }
@@ -28,6 +29,13 @@ public class Status implements Identifiable {
     public void setName(String name) {
         this.name = name;
     }
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
 
     @Override
@@ -38,7 +46,8 @@ public class Status implements Identifiable {
 
         Status status = (Status) o;
         return id == status.id &&
-                name.equals(status.name);
+                name.equals(status.name) &&
+                score == status.score;
     }
 
     @Override
@@ -47,6 +56,7 @@ public class Status implements Identifiable {
         int result = 1;
         result = prime * result +  id;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + score;
         return result;
     }
 }

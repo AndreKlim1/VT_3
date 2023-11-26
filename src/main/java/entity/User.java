@@ -4,22 +4,27 @@ import java.io.Serializable;
 
 public class User implements Identifiable, Serializable {
     private int id;
-    private String userName;
+    private String nickname;
     private String email;
     private String password;
+    private int score;
+    private boolean banned;
     private int roleId;
     private int statusId;
 
 
+
     public User() {}
 
-    public User(int id, String userName, String email, String password, int roleId, int statusId) {
+    public User(int id, String nickname, String email, String password, int score, boolean banned, int roleId, int statusId) {
         this.id = id;
-        this.userName = userName;
+        this.nickname = nickname;
         this.email = email;
         this.password = password;
+        this.score = score;
         this.roleId = roleId;
         this.statusId = statusId;
+        this.banned = banned;
     }
 
     @Override
@@ -31,12 +36,12 @@ public class User implements Identifiable, Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getEmail() {
@@ -54,6 +59,16 @@ public class User implements Identifiable, Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public boolean getBanned() { return banned; }
+    public void setBanned(boolean banned) { this.banned = banned; }
 
     public int getRoleId() {
         return roleId;
@@ -79,11 +94,13 @@ public class User implements Identifiable, Serializable {
 
         User user = (User) o;
         return id == user.id &&
-                userName.equals(user.userName) &&
+                nickname.equals(user.nickname) &&
                 email.equals(user.email) &&
                 password.equals(user.password) &&
                 roleId == user.roleId &&
-                statusId == user.statusId;
+                statusId == user.statusId &&
+                score == user.score &&
+                banned == user.banned;
     }
 
     @Override
@@ -91,11 +108,13 @@ public class User implements Identifiable, Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result +  id;
-        result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+        result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + score;
         result = prime * result +  roleId;
         result = prime * result +  statusId;
+        result = prime * result + (banned ? 1 : 0) ;
         return result;
     }
 
@@ -103,9 +122,11 @@ public class User implements Identifiable, Serializable {
     public String toString() {
         final StringBuilder result = new StringBuilder("User{");
         result.append("id=").append(id);
-        result.append(", userName=").append(userName);
+        result.append(", nickname=").append(nickname);
         result.append(", email='").append(email).append('\'');
         result.append(", password='").append(password).append('\'');
+        result.append(", score='").append(score).append('\'');
+        result.append(", banned='").append(banned);
         result.append(", roleId=").append(roleId);
         result.append(", statusId=").append(statusId);
         result.append('}');
