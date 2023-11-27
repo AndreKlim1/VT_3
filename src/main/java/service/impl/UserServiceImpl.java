@@ -1,10 +1,12 @@
 package service.impl;
 
 import dao.DaoFactory;
+import dao.api.FeedbackDao;
 import dao.api.RoleDao;
 import dao.api.StatusDao;
 import dao.api.UserDao;
 import dao.impl.RoleDaoImpl;
+import entity.Feedback;
 import entity.User;
 import exceptions.DaoException;
 import exceptions.ServiceException;
@@ -127,6 +129,11 @@ public class UserServiceImpl implements UserService {
         try {
             UserDao userDao = DaoFactory.getInstance().getUserDao();
             userDao.updateBannedById(id, banned);
+            FeedbackDao feedbackDao = DaoFactory.getInstance().getFeedbackDao();
+            List<Feedback> feedbacks = feedbackDao.findByUserId(id);
+            for(Feedback feedback : feedbacks){
+                feedbackDao.removeById(feedback.getId());
+            }
             return true;
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);

@@ -16,7 +16,7 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     private static final String COMMAND = "command";
-    private static final String PATH = "/hotel?";
+    private static final String PATH = "/movie-rate?";
     private static final String MAIN_COMMAND = "command=main";
 
     @Override

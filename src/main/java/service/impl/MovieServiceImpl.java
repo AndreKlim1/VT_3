@@ -40,6 +40,11 @@ public class MovieServiceImpl implements MovieService {
     public void removeMovieById(int id) throws ServiceException {
         try {
             MovieDao movieDao= DaoFactory.getInstance().getMovieDao();
+            FeedbackDao feedbackDao = DaoFactory.getInstance().getFeedbackDao();
+            List<Feedback> feedbacks = feedbackDao.findByMovieId(id);
+            for(Feedback feedback : feedbacks){
+                feedbackDao.removeById(feedback.getId());
+            }
             movieDao.removeById(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
