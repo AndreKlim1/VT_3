@@ -21,6 +21,7 @@ public class MovieDaoImpl extends AbstractDao<Movie> implements MovieDao {
 
     private static final String UPDATE_MOVIE_AVERAGE_RATING_BY_ID_QUERY = "UPDATE " + Table.USER + " SET "+Column.MOVIE_AVERAGE_RATING+"=? WHERE "+Column.ID+"=?";
 
+    private static final String UPDATE_MOVIE_FEEDBACK_AMOUNT_BY_ID_QUERY = "UPDATE " + Table.USER + " SET "+Column.MOVIE_FEEDBACK_AMOUNT+"=? WHERE "+Column.ID+"=?";
     private static final String SAVE_MOVIE_QUERY = "INSERT INTO " + Table.MOVIE + " ("+Column.MOVIE_NAME+", "+Column.MOVIE_DESCRIPTION+", "+Column.MOVIE_IMAGE+", "+ Column.MOVIE_AVERAGE_RATING+", "+Column.MOVIE_FEEDBACK_AMOUNT+", "+Column.MOVIE_RATED_ENOUGH+") VALUES (?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE_MOVIE_BY_ID_QUERY = "UPDATE " + Table.MOVIE + " SET "+Column.MOVIE_NAME+"=? "+Column.MOVIE_DESCRIPTION+"=? "+Column.MOVIE_IMAGE+"=? "+ Column.MOVIE_AVERAGE_RATING+"=? "+Column.MOVIE_FEEDBACK_AMOUNT+"=? "+Column.MOVIE_RATED_ENOUGH+"=? WHERE "+Column.ID+"=?";
@@ -30,7 +31,7 @@ public class MovieDaoImpl extends AbstractDao<Movie> implements MovieDao {
 
     @Override
     public int save(Movie movie) throws DaoException {
-
+        return executeInsertQuery(SAVE_MOVIE_QUERY, movie.getName(), movie.getDescription(), movie.getImage(), movie.getAverageRating(), movie.getFeedbackAmount(), (movie.getRatedEnough()) ? 1 : 0);
     }
 
     @Override
@@ -50,11 +51,16 @@ public class MovieDaoImpl extends AbstractDao<Movie> implements MovieDao {
 
     @Override
     public void updateMovieById(int id, Movie movie) throws DaoException {
-
+        executeUpdateQuery(UPDATE_MOVIE_BY_ID_QUERY, movie.getName(), movie.getDescription(), movie.getImage(), movie.getAverageRating(), movie.getFeedbackAmount(), (movie.getRatedEnough()) ? 1 : 0);
     }
 
     @Override
     public void updateAverageRatingById(int id, double averageRating) throws DaoException {
+        executeUpdateQuery(UPDATE_MOVIE_AVERAGE_RATING_BY_ID_QUERY, averageRating);
+    }
 
+    @Override
+    public void updateFeedbackAmountById(int id, int feedbackAmount) throws DaoException {
+        executeUpdateQuery(UPDATE_MOVIE_FEEDBACK_AMOUNT_BY_ID_QUERY, feedbackAmount);
     }
 }

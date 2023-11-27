@@ -1,6 +1,9 @@
 package dao.mapper;
 
 
+import dao.mapper.impl.*;
+import entity.*;
+
 public class RowMapperFactory {
     public static RowMapperFactory getInstance() {
         return Holder.INSTANCE;
@@ -8,9 +11,9 @@ public class RowMapperFactory {
 
     private final RowMapper<User> userRowMapper = new UserRowMapper();
     private final RowMapper<Role> roleRowMapper = new RoleRowMapper();
-    private final RowMapper<UserInformation> userInformationRowMapper = new UserInformationRowMapper();
-    private final RowMapper<UserOrder> userOrderRowMapper = new UserOrderRowMapper();
-    private final RowMapper<Apartment> apartmentRowMapper = new ApartmentRowMapper();
+    private final RowMapper<Movie> movieRowMapper = new MovieRowMapper();
+    private final RowMapper<Status> statusRowMapper = new StatusRowMapper();
+    private final RowMapper<Feedback> feedbackRowMapper = new FeedbackRowMapper();
 
     public RowMapper<User> getUserRowMapper() {
         return userRowMapper;
@@ -20,16 +23,16 @@ public class RowMapperFactory {
         return roleRowMapper;
     }
 
-    public RowMapper<UserInformation> getUserInformationRowMapper() {
-        return userInformationRowMapper;
+    public RowMapper<Movie> getMovieRowMapper() {
+        return movieRowMapper;
     }
 
-    public RowMapper<UserOrder> getUserOrderRowMapper() {
-        return userOrderRowMapper;
+    public RowMapper<Status> getStatusRowMapper() {
+        return statusRowMapper;
     }
 
-    public RowMapper<Apartment> getApartmentRowMapper() {
-        return apartmentRowMapper;
+    public RowMapper<Feedback> getFeedbackRowMapper() {
+        return feedbackRowMapper;
     }
 
     private static class Holder {

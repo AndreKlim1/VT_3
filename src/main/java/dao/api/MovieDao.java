@@ -1,12 +1,13 @@
 package dao.api;
 
+import dao.Dao;
 import entity.Movie;
 import exceptions.DaoException;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface MovieDao {
+public interface MovieDao extends Dao<Movie> {
 
     Optional<Movie> findByName(String name) throws DaoException;
 

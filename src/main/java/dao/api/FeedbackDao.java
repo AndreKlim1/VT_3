@@ -1,5 +1,6 @@
 package dao.api;
 
+import dao.Dao;
 import entity.Feedback;
 import entity.Movie;
 import exceptions.DaoException;
@@ -7,7 +8,7 @@ import exceptions.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-public interface FeedbackDao {
+public interface FeedbackDao extends Dao<Feedback> {
 
     List<Feedback> findByMovieId(int movieId) throws DaoException;
     List<Feedback> findByUserId(int userId) throws DaoException;

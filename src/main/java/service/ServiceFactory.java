@@ -1,5 +1,8 @@
 package service;
 
+import service.api.*;
+import service.impl.*;
+
 public class ServiceFactory {
     private ServiceFactory() {
     }
@@ -9,16 +12,15 @@ public class ServiceFactory {
     }
 
 
-
-    private final UserOrderService userOrderService=new UserOrderServiceImpl();
-    private final UserInformationService userInformationService=new UserInformationServiceImpl();
-    private final ApartmentService apartmentService=new ApartmentServiceImpl();
+    private final StatusService statusService =new StatusServiceImpl();
+    private final MovieService movieService =new MovieServiceImpl();
+    private final FeedbackService feedbackService =new FeedbackServiceImpl();
     private final UserService userService=new UserServiceImpl();
     private final RoleService roleService=new RoleServiceImpl();
 
 
-    public ApartmentService getApartmentService() {
-        return apartmentService;
+    public FeedbackService getFeedbackService() {
+        return feedbackService;
     }
 
     public RoleService getRoleService() {
@@ -29,12 +31,12 @@ public class ServiceFactory {
         return userService;
     }
 
-    public UserOrderService getUserOrderService() {
-        return userOrderService;
+    public StatusService getStatusService() {
+        return statusService;
     }
 
-    public UserInformationService getUserInformationService() {
-        return userInformationService;
+    public MovieService getMovieService() {
+        return movieService;
     }
 
     private static class Holder {
