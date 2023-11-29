@@ -22,6 +22,7 @@ public interface MovieService {
     List<Movie> retrieveMoviesByAverageRating(double from, double to) throws ServiceException;
 
     List<Movie> retrieveMoviesByFeedbackAmount(int from, int to) throws ServiceException;
+    List<Movie> retrieveAllMovies() throws ServiceException;
 
     boolean updateMovieAverageRatingById(int id) throws ServiceException;
 

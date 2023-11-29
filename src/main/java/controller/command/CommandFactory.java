@@ -1,5 +1,8 @@
 package controller.command;
 
+import controller.command.impl.*;
+import controller.command.impl.transition.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -9,30 +12,25 @@ public class CommandFactory {
 
     private CommandFactory() {
         commands.put(CommandName.DEFAULT_COMMAND, new DefaultCommand());
-        commands.put(CommandName.MAIN_COMMAND, new GoToMainCommand());
-        commands.put(CommandName.PROFILE_COMMAND, new GoToProfileCommand());
-        commands.put(CommandName.REGISTRATION_COMMAND, new LogUpCommand());
-        commands.put(CommandName.LOG_IN_COMMAND, new GoToLogInCommand());
-        commands.put(CommandName.CONTACTS_COMMAND, new GoToContactsCommand());
+        commands.put(CommandName.GO_MAIN_COMMAND, new GoToMainCommand());
+        commands.put(CommandName.GO_PROFILE_COMMAND, new GoToProfileCommand());
+        commands.put(CommandName.GO_LOG_UP_COMMAND, new GoToLogUpCommand());
+        commands.put(CommandName.GO_LOG_IN_COMMAND, new GoToLogInCommand());
+        commands.put(CommandName.GO_MOVIE_INFO_COMMAND, new GoToMovieInfoCommand());
+        commands.put(CommandName.GO_ADD_MOVIE_COMMAND, new GoToAddMovieCommand());
 
-        commands.put(CommandName.CATALOG_COMMAND, new GoToCatalogCommand());
-        commands.put(CommandName.CHECK_LOGIN_COMMAND, new LogInCommand());
+        commands.put(CommandName.ADD_FEEDBACK_COMMAND, new AddFeedbackCommand());
         commands.put(CommandName.LOG_OUT_COMMAND, new LogOutCommand());
-        commands.put(CommandName.LOG_UP_COMMAND, new GoToLogUpCommand());
-
-        commands.put(CommandName.VIEW_ORDERS_COMMAND, new GoToViewOrdersCommand());
-        commands.put(CommandName.DELETE_USER_ORDER_COMMAND, new DeleteUserOrderCommand());
-
-        commands.put(CommandName.ADD_APARTMENT_COMMAND, new GoToAddApartmentCommand());
-        commands.put(CommandName.CONFIRM_ADDING_APARTMENT_COMMAND, new ConfirmAddingApartmentCommand());
-
-        commands.put(CommandName.MY_ORDERS_COMMAND, new GoToMyOrdersCommand());
-
-        commands.put(CommandName.CONFIRM_USER_ORDER_COMMAND, new ConfirmUserOrderCommand());
-        commands.put(CommandName.ADD_USER_ORDER,new GoToAddUserOrderCommand());
-        commands.put(CommandName.COMPLETE_USER_ORDER_COMMAND, new CompleteOrderCommand());
-        commands.put(CommandName.EDIT_APARTMENT_STATUS, new GoToChangeApartmentStatusCommand());
-        commands.put(CommandName.CONFIRM_CHANGING_APARTMENT_STATUS_COMMAND, new ConfirmChangingApartmentStatusCommand());
+        commands.put(CommandName.LOG_IN_COMMAND, new LogInCommand());
+        commands.put(CommandName.LOG_UP_COMMAND, new LogUpCommand());
+        commands.put(CommandName.ADD_MOVIE_COMMAND, new AddMovieCommand());
+        commands.put(CommandName.BAN_USER_COMMAND, new BanUserCommand());
+        commands.put(CommandName.CHANGE_FEEDBACK_COMMAND, new ChangeFeedbackCommand());
+        commands.put(CommandName.CHANGE_MOVIE_COMMAND, new ChangeMovieCommand());
+        commands.put(CommandName.CHANGE_NICKNAME_COMMAND, new ChangeUserNicknameCommand());
+        commands.put(CommandName.CHANGE_STATUS_COMMAND, new ChangeUserStatusCommand());
+        commands.put(CommandName.DELETE_FEEDBACK_COMMAND, new DeleteFeedbackCommand());
+        commands.put(CommandName.DELETE_MOVIE_COMMAND, new DeleteMovieCommand());
     }
 
     public static CommandFactory getInstance() {

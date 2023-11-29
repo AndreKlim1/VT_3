@@ -20,6 +20,7 @@ public class MovieServiceImpl implements MovieService {
 
     private final static int ENOUGH_RATED_AMOUNT = 5;
     private final static int RATING_BORDERS = 2;
+
     @Override
     public boolean updateMovieInformation(int id, String name, String description, String image, double averageRating, int FeedbackAmount, boolean ratedEnough) throws ServiceException {
         try{
@@ -105,6 +106,16 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public List<Movie> retrieveAllMovies() throws ServiceException {
+        try {
+            MovieDao movieDao= DaoFactory.getInstance().getMovieDao();
+            return movieDao.findAll();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public boolean updateMovieAverageRatingById(int id) throws ServiceException {
         try {
             MovieDao movieDao= DaoFactory.getInstance().getMovieDao();
@@ -151,6 +162,7 @@ public class MovieServiceImpl implements MovieService {
                 List<Feedback> feedbacks = feedbackDao.findByMovieId(id);
                 UserDao userDao = DaoFactory.getInstance().getUserDao();
                 UserService userService = ServiceFactory.getInstance().getUserService();
+
                 double averageRating = movie.getAverageRating();
                 for(Feedback feedback : feedbacks){
                     int userId = feedback.getUserId();

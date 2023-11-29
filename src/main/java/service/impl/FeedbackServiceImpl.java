@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FeedbackServiceImpl implements FeedbackService {
+
     @Override
     public List<Feedback> retrieveFeedbackByUserId(int userId) throws ServiceException {
         try {
@@ -90,10 +91,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public boolean addNewFeedback(String stringRating, String content, String stringUserId, String stringMovieId) throws ServiceException {
+    public boolean addNewFeedback(String stringRating, String content, int userId, int movieId) throws ServiceException {
         int rating = Integer.parseInt(stringRating);
-        int userId = Integer.parseInt(stringUserId);
-        int movieId = Integer.parseInt(stringMovieId);
         Feedback feedback = new Feedback(0, rating, content, userId, movieId);
         try {
             FeedbackDao feedbackDao= DaoFactory.getInstance().getFeedbackDao();

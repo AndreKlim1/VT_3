@@ -20,5 +20,5 @@ public interface FeedbackService {
 
     void removeFeedbackById(int id) throws ServiceException;
 
-    boolean addNewFeedback(String stringRating, String content, String stringUserId, String stringMovieId) throws ServiceException;
+    boolean addNewFeedback(String stringRating, String content, int userId, int movieId) throws ServiceException;
 }

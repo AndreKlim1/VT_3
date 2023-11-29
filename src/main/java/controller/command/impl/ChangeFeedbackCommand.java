@@ -9,18 +9,17 @@ import exceptions.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
 import service.ServiceFactory;
 import service.api.FeedbackService;
-import service.api.MovieService;
 
 import java.util.Optional;
 
-public class AddMovieCommand implements Command {
+public class ChangeFeedbackCommand implements Command {
 
-    private static final String PAGE = "command=main";
+    private static final String PAGE = "command=movieInfo";
     private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
-    private static final String NAME = "name";
-    private static final String DESCRIPTION = "description";
-    private static final String IMAGE = "image";
-
+    private static final String RATING = "rating";
+    private static final String CONTENT = "content";
+    private static final String MOVIE_ID = "movieId";
+    private static final String USER_ID = "userId";
     private static final String MESSAGE_PARAMETER = "&message=";
     private static final String ERROR = "error";
     private static final String OK = "ok";
@@ -30,14 +29,15 @@ public class AddMovieCommand implements Command {
         RequestContext requestContext = helper.createContext();
         String message = ERROR;
 
-        Optional<String> name = Optional.ofNullable(requestContext.getRequestParameter(NAME));
-        Optional<String> description = Optional.ofNullable(requestContext.getRequestParameter(DESCRIPTION));
-        Optional<String> image = Optional.ofNullable(requestContext.getRequestParameter(IMAGE));
+        Optional<String> stringRating = Optional.ofNullable(requestContext.getRequestParameter(RATING));
+        Optional<String> content = Optional.ofNullable(requestContext.getRequestParameter(CONTENT));
 
         try {
-            if (name.isPresent() && image.isPresent() && description.isPresent()) {
-                MovieService movieService = ServiceFactory.getInstance().getMovieService();
-                boolean result = movieService.addNewMovie(name.get(), description.get(), image.get(), 0, 0, false);
+            if (stringRating.isPresent() && content.isPresent()) {
+                int movieId = Integer.parseInt(requestContext.getRequestParameter(MOVIE_ID));
+                int userId = Integer.parseInt(requestContext.getRequestParameter(USER_ID));
+                FeedbackService feedbackService = ServiceFactory.getInstance().getFeedbackService();
+                boolean result = feedbackService.addNewFeedback(stringRating.get(), content.get(), userId, movieId);
                 if (result) {
                     message = OK;
                 }
@@ -48,6 +48,6 @@ public class AddMovieCommand implements Command {
         }
 
         helper.updateRequest(requestContext);
-        return new CommandResult(PAGE + MESSAGE_PARAMETER + message, CommandResultType.REDIRECT);
+        return new CommandResult(PAGE + MESSAGE_PARAMETER + message, CommandResultType.REDIRECT)//UPDATING SCORE FOR ALL USERS!!!
     }
 }
