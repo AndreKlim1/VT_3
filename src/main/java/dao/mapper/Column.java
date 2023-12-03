@@ -13,9 +13,10 @@ public final class Column {
     public static final String USER_SCORE = "score";
     public static final String USER_BANNED = "banned";
 
-    public static final String STATUS_ID = "role_id";
+    public static final String STATUS_ID = "status_id";
     public static final String STATUS_NAME = "name";
     public static final String STATUS_SCORE = "score";
+
 
     public static final String FEEDBACK_ID = "feedback_id";
     public static final String FEEDBACK_RATING = "rating";

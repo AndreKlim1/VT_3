@@ -16,6 +16,7 @@ import service.api.FeedbackService;
 import service.api.MovieService;
 import service.api.StatusService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class GoToProfileCommand implements Command {
             FeedbackService feedbackService = ServiceFactory.getInstance().getFeedbackService();
             List<Feedback> feedbacks = feedbackService.retrieveFeedbackByUserId(user.getId());
             MovieService movieService = ServiceFactory.getInstance().getMovieService();
-            List<Movie> movies = null
+            List<Movie> movies = new ArrayList<Movie>();
             for(Feedback feedback : feedbacks){
                 movies.add(movieService.retrieveMovieById(feedback.getMovieId()).get());
             }
@@ -58,6 +59,6 @@ public class GoToProfileCommand implements Command {
         }
 
         helper.updateRequest(requestContext);
-        return new CommandResult(PAGE, CommandResultType.FORWARD)
+        return new CommandResult(PAGE, CommandResultType.FORWARD);
     }
 }

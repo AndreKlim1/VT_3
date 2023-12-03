@@ -2,6 +2,7 @@ package controller;
 
 import controller.command.Command;
 import controller.command.CommandFactory;
+import controller.command.CommandName;
 import controller.command.CommandResult;
 import controller.context.RequestContextHelper;
 import dao.connection.ConnectionPool;
@@ -16,8 +17,8 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     private static final String COMMAND = "command";
-    private static final String PATH = "/movie-rate?";
-    private static final String MAIN_COMMAND = "command=main";
+    private static final String PATH = "movie-rate?";
+    private static final String MAIN_COMMAND = "command="+ CommandName.GO_MAIN_COMMAND;
 
     @Override
     public void init() throws ServletException {

@@ -17,6 +17,7 @@ import service.api.MovieService;
 import service.api.StatusService;
 import service.api.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,14 +51,14 @@ public class GoToMovieInfoCommand implements Command {
             requestContext.addRequestAttribute(FEEDBACKS,feedbacks);
 
             UserService userService = ServiceFactory.getInstance().getUserService();
-            List<User> users;
+            List<User> users = new ArrayList<User>();
             for(Feedback feedback : feedbacks){
                 users.add(userService.retrieveUserById(feedback.getUserId()).get());
             }
             requestContext.addRequestAttribute(USERS,users);
 
             StatusService statusService = ServiceFactory.getInstance().getStatusService();
-            List<Status> statuses;
+            List<Status> statuses = new ArrayList<Status>();
             for(User user : users){
                 statuses.add(statusService.retrieveStatusById(user.getStatusId()).get());
             }

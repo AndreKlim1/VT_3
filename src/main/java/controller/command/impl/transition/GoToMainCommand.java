@@ -29,6 +29,7 @@ public class GoToMainCommand implements Command {
             List<Movie> movies = movieService.retrieveAllMovies();
             requestContext.addRequestAttribute(MOVIES,movies);
 
+
         } catch (ServiceException e) {
         return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
     }

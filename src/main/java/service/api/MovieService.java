@@ -28,5 +28,7 @@ public interface MovieService {
 
     boolean updateMovieFeedbackAmountById(int id) throws ServiceException;
 
-    void checkFeedbacksByMovieId(int id) throws ServiceException;
+    boolean checkFeedbacksByMovieId(int id) throws ServiceException;
+
+    int calcUserScoreByMovieId(int id, int rating) throws ServiceException;
 }

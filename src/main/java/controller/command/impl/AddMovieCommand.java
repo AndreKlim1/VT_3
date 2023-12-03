@@ -1,6 +1,7 @@
 package controller.command.impl;
 
 import controller.command.Command;
+import controller.command.CommandName;
 import controller.command.CommandResult;
 import controller.command.CommandResultType;
 import controller.context.RequestContext;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 public class AddMovieCommand implements Command {
 
-    private static final String PAGE = "command=main";
+    private static final String PAGE = "command="+ CommandName.GO_MAIN_COMMAND;
     private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
     private static final String NAME = "name";
     private static final String DESCRIPTION = "description";

@@ -1,6 +1,7 @@
 package controller.command.impl;
 
 import controller.command.Command;
+import controller.command.CommandName;
 import controller.command.CommandResult;
 import controller.command.CommandResultType;
 import controller.context.RequestContext;
@@ -11,7 +12,7 @@ import service.ServiceFactory;
 import service.api.MovieService;
 
 public class DeleteMovieCommand implements Command {
-    private static final String PAGE = "command=main";
+    private static final String PAGE = "command="+ CommandName.GO_MAIN_COMMAND;
     private static final String MOVIE_ID = "movieId";
     private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
 

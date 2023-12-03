@@ -1,0 +1,31 @@
+body {
+  font-family: sans-serif;
+  background-color: #fff;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  width: 300px;
+  margin: 0 auto;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
+  margin-top: 10px;
+}

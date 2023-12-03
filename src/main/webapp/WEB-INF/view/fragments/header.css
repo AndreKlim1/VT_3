@@ -1,0 +1,28 @@
+header {
+  background-color: #008000;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+h1 {
+  font-size: 2em;
+  font-family: 'Roboto', sans-serif;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+
+
+  &:hover {
+    color: #999;
+  }
+
+
+  &:active {
+    color: #666;
+  }
+}

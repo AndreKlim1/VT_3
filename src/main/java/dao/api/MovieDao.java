@@ -19,4 +19,8 @@ public interface MovieDao extends Dao<Movie> {
     void updateAverageRatingById(int id, double averageRating) throws DaoException;
 
     void updateFeedbackAmountById(int id, int feedbackAmount) throws DaoException;
+
+    void updateRatedEnoughById(int id) throws DaoException;
+
+
 }

@@ -1,0 +1,56 @@
+body {
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+img {
+  max-width: 100%;
+}
+
+.star {
+  width: 20px;
+  height: 20px;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Gold_star_solid.svg/1200px-Gold_star_solid.svg.png");
+}
+
+.star.active {
+  background-color: yellow;
+}
+
+.star.not-active {
+  opacity: 0.5;
+}
+
+#rating {
+  display: flex;
+  justify-content: center;
+}
+
+.review {
+  margin-bottom: 20px;
+}
+
+.review h3 {
+  margin-bottom: 5px;
+}
+
+.review p {
+  margin-bottom: 10px;
+}
+
+.review .star {
+  margin-right: 5px;
+}

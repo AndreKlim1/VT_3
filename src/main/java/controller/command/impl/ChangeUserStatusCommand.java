@@ -15,7 +15,7 @@ public class ChangeUserStatusCommand implements Command {
 
     private static final String PAGE = "WEB-INF/view/movie.jsp";
     private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
-    private static final String STATUS_ID= "status_id";
+    private static final String STATUS_ID= "statusId";
     private static final String USER= "user";
 
     @Override

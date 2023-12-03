@@ -1,6 +1,7 @@
 package controller.command.impl;
 
 import controller.command.Command;
+import controller.command.CommandName;
 import controller.command.CommandResult;
 import controller.command.CommandResultType;
 import controller.context.RequestContext;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 public class LogInCommand implements Command {
 
-    private static final String PROFILE_PAGE = "command=goProfile";
+    private static final String PROFILE_PAGE = "WEB-INF/view/login.jsp";
     private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
     private static final String LOGIN_PAGE = "WEB-INF/view/login.jsp";
     private static final String PASSWORD_PARAMETER = "password";
@@ -45,7 +46,7 @@ public class LogInCommand implements Command {
                 role.ifPresent(value -> requestContext.addSessionAttribute(ROLE, value));
 
                 helper.updateRequest(requestContext);
-                return new CommandResult(PROFILE_PAGE, CommandResultType.REDIRECT);
+                return new CommandResult(PROFILE_PAGE, CommandResultType.FORWARD);
             }
         } catch (ServiceException e) {
             return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);

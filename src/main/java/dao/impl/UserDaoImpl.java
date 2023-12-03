@@ -7,8 +7,11 @@ import dao.mapper.Column;
 import dao.mapper.RowMapperFactory;
 import entity.User;
 import exceptions.DaoException;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Optional;
+
+import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_USER_BY_EMAIL_AND_PASSWORD_QUERY = "SELECT * FROM " + Table.USER + " WHERE "+Column.USER_EMAIL+"=? and "+Column.USER_PASSWORD+"=SHA1(?)";
@@ -29,7 +32,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
-        return executeQueryForSingleResult(FIND_USER_BY_EMAIL_AND_PASSWORD_QUERY, email, DigestUtils.sha1Hex(password));
+        return executeQueryForSingleResult(FIND_USER_BY_EMAIL_AND_PASSWORD_QUERY, email, password);
     }
 
 

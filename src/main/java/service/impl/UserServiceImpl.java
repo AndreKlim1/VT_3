@@ -16,6 +16,8 @@ import service.api.UserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserServiceImpl implements UserService {
 
@@ -27,9 +29,9 @@ public class UserServiceImpl implements UserService {
             return Optional.empty();
         }
 
-        if (!isEmailValid(email)) {
+        /*if (!isEmailValid(email)) {
             return Optional.empty();
-        }
+        }*/
 
         try {
             UserDao userDao = DaoFactory.getInstance().getUserDao();
@@ -39,15 +41,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+
     @Override
     public boolean register(String name, String email, String password) throws ServiceException {
         if (name == null || email == null || password == null) {
             return false;
         }
 
-        if (!(isEmailValid(email) && isUserInformationValid(name, surname,  phone))) {
+        /*if (!isEmailValid(email)) {
             return false;
-        }
+        }*/
         try {
             UserDao userDao = DaoFactory.getInstance().getUserDao();
             if (userDao.findByEmail(email).isPresent()) {
@@ -138,5 +142,11 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
+    }
+
+    private boolean isEmailValid(String email) {
+        Pattern pattern = Pattern.compile("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$");
+        Matcher matcher = pattern.matcher(email);
+        return matcher.find();
     }
 }

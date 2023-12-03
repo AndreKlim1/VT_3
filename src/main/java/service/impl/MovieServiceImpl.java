@@ -144,8 +144,7 @@ public class MovieServiceImpl implements MovieService {
             if(feedbacks!=null)
                 feedbackAmount = feedbacks.size();
             movieDao.updateFeedbackAmountById(id, feedbackAmount);
-            checkFeedbacksByMovieId(id);
-            return true;
+            return checkFeedbacksByMovieId(id);
 
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
@@ -153,27 +152,29 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void checkFeedbacksByMovieId(int id) throws ServiceException{
+    public boolean checkFeedbacksByMovieId(int id) throws ServiceException{
         try{
             MovieDao movieDao = DaoFactory.getInstance().getMovieDao();
             Movie movie = movieDao.findById(id).get();
             if(!movie.getRatedEnough() && movie.getFeedbackAmount()>=ENOUGH_RATED_AMOUNT){
-                FeedbackDao feedbackDao = DaoFactory.getInstance().getFeedbackDao();
-                List<Feedback> feedbacks = feedbackDao.findByMovieId(id);
-                UserDao userDao = DaoFactory.getInstance().getUserDao();
-                UserService userService = ServiceFactory.getInstance().getUserService();
-
-                double averageRating = movie.getAverageRating();
-                for(Feedback feedback : feedbacks){
-                    int userId = feedback.getUserId();
-                    int rating = feedback.getRating();
-                    User user = userDao.findById(userId).get();
-                    int score = user.getScore();
-                    score += Math.abs(averageRating-rating)<RATING_BORDERS ? 5 : -5;
-                    userService.updateUserScoreById(userId, score);
-                }
+                movieDao.updateRatedEnoughById(id);
+                return true;
             }
+            return false;
 
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public int calcUserScoreByMovieId(int id, int rating) throws ServiceException{
+        try{
+            MovieDao movieDao = DaoFactory.getInstance().getMovieDao();
+            double averageRating = movieDao.findById(id).get().getAverageRating();
+            int score;
+            score = Math.abs(averageRating-rating)<RATING_BORDERS ? 5 : -5;
+            return score;
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
