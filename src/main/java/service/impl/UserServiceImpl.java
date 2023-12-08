@@ -95,6 +95,9 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserNicknameById(int id, String nickname) throws ServiceException {
         try {
             UserDao userDao = DaoFactory.getInstance().getUserDao();
+            if(userDao.findByNickname(nickname).isPresent()){
+                return false;
+            }
             userDao.updateNicknameById(id, nickname);
             return true;
         } catch (DaoException e) {

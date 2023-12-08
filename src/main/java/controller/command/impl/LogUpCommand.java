@@ -14,7 +14,7 @@ import service.api.UserService;
 import java.util.Optional;
 
 public class LogUpCommand implements Command {
-    private static final String LOG_IN_PAGE = "WEB-INF/view/login.jsp";
+    private static final String LOG_UP_PAGE = "WEB-INF/view/logup.jsp";
     private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
     private static final String EMAIL = "email";
     private static final String PASSWORD_FIRST = "password-first";
@@ -49,6 +49,6 @@ public class LogUpCommand implements Command {
 
         requestContext.addRequestAttribute(MESSAGE, message);
         helper.updateRequest(requestContext);
-        return new CommandResult(LOG_IN_PAGE, CommandResultType.REDIRECT);
+        return new CommandResult(LOG_UP_PAGE, CommandResultType.REDIRECT);
     }
 }

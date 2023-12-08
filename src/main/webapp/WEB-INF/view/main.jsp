@@ -50,10 +50,16 @@
         <ul>
             <c:forEach items="${movies}" var="movie">
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goMovieInfo">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goMovieInfo&movieId=${movie.id}">
                         <img src="${movie.image}" alt="${movie.name}">
                     </a>
                     <p>${movie.name}</p>
+                    <c:if test="${sessionScope.user != null}">
+                        <c:if test="${sessionScope.role.name == 'admin'}">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goChangeMovie&movieId=${movie.id}">Change movie</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=deleteMovie=${movie.id}">Delete movie</a>
+                        </c:if>
+                    </c:if>
                 </li>
             </c:forEach>
         </ul>

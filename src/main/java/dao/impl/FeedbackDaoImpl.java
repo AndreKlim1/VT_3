@@ -16,7 +16,7 @@ public class FeedbackDaoImpl extends AbstractDao<Feedback> implements FeedbackDa
     private static final String UPDATE_FEEDBACK_BY_ID_QUERY = "UPDATE " + Table.FEEDBACK + " SET "+Column.FEEDBACK_RATING+"=? "+Column.FEEDBACK_CONTENT+"=? "+Column.USER_ID+"=? "+ Column.MOVIE_ID+"=? WHERE "+Column.ID+"=?";
     private static final String FIND_FEEDBACK_BY_MOVIE_ID_QUERY = "SELECT * FROM " + Table.FEEDBACK + " WHERE "+ Column.MOVIE_ID+"=? ";
     private static final String FIND_FEEDBACK_BY_USER_ID_QUERY = "SELECT * FROM " + Table.FEEDBACK + " WHERE "+Column.USER_ID+"=? ";
-    private static final String FIND_FEEDBACK_BY_USER_ID_AND_MOVIE_ID_QUERY = "SELECT * FROM " + Table.FEEDBACK + " WHERE "+Column.USER_ID+" and "+ Column.MOVIE_ID+"=? ";
+    private static final String FIND_FEEDBACK_BY_USER_ID_AND_MOVIE_ID_QUERY = "SELECT * FROM " + Table.FEEDBACK + " WHERE "+Column.USER_ID+"=? and "+ Column.MOVIE_ID+"=? ";
     private static final String SAVE_FEEDBACK_QUERY = "INSERT INTO " + Table.FEEDBACK + " ("+Column.FEEDBACK_RATING+", "+Column.FEEDBACK_CONTENT+", "+Column.USER_ID+", "+ Column.MOVIE_ID+") VALUES (?, ?, ?, ?)";
 
     public FeedbackDaoImpl() {

@@ -15,6 +15,7 @@ public class CommandFactory {
         commands.put(CommandName.GO_MAIN_COMMAND, new GoToMainCommand());
         commands.put(CommandName.GO_PROFILE_COMMAND, new GoToProfileCommand());
         commands.put(CommandName.GO_LOG_UP_COMMAND, new GoToLogUpCommand());
+        commands.put(CommandName.GO_CHANGE_MOVIE_COMMAND, new GoToChangeMovieCommand());
         commands.put(CommandName.GO_LOG_IN_COMMAND, new GoToLogInCommand());
         commands.put(CommandName.GO_MOVIE_INFO_COMMAND, new GoToMovieInfoCommand());
         commands.put(CommandName.GO_ADD_MOVIE_COMMAND, new GoToAddMovieCommand());

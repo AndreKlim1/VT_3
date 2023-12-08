@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Add movie</title>
+    <title>Change movie</title>
     <style>
         body {
           font-family: sans-serif;
@@ -41,27 +41,27 @@
 </head>
 <body>
 
-<h1>Add movie</h1>
+<h1>Change movie</h1>
 
-<form action="${pageContext.request.contextPath}/movie-rate?command=addMovie" method="post">
+<form action="${pageContext.request.contextPath}/movie-rate?command=changeMovie&movieId=${movie.id}" method="post">
 
     <div>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" placeholder="Enter the movie name" required>
+        <input type="text" id="name" value="${movie.name}" placeholder="Enter the movie name" name="name" required>
     </div>
 
     <div>
         <label for="description">Description:</label>
-        <input type="text" id="description" name="description" placeholder="Enter the description" required>
+        <input type="text" id="description" value="${movie.description}" placeholder="Enter the description" name="description" required>
     </div>
 
     <div>
         <label for="image">Image:</label>
-        <input type="text" id="image" name="image" placeholder="Enter the image name" required>
+        <input type="text" id="image" value="${movie.image}" placeholder="Enter the image name" name="image" required>
     </div>
 
     <div>
-        <input type="submit" value="Add movie">
+        <input type="submit" value="Change movie">
     </div>
 
 </form>

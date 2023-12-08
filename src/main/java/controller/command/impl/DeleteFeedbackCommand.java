@@ -15,7 +15,7 @@ import service.api.MovieService;
 
 public class DeleteFeedbackCommand implements Command {
 
-    private static final String PAGE = "command="+ CommandName.GO_MAIN_COMMAND;
+    private static final String PAGE = "command="+ CommandName.GO_MOVIE_INFO_COMMAND;
     private static final String FEEDBACK_ID = "feedbackId";
     private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
     private static final String MOVIE_ID = "movieId";

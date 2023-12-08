@@ -48,7 +48,7 @@
   <c:if test="${sessionScope.user != null}">
     <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goProfile">Profile</a>
 
-    <c:if test="${sessionScope.user.role == 'admin'}">
+    <c:if test="${sessionScope.role.name == 'admin'}">
       <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goAddMovie">Add movie</a>
     </c:if>
 

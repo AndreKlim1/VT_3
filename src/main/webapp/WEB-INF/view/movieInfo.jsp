@@ -3,52 +3,170 @@
 
 <html>
 <head>
-  <title>Movie</title>
-  <link href="style/movieInfo.css" rel="stylesheet" />
+  <style>
+  .container {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+
+  .header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  .content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  h2 {
+    margin-top: 30px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .review {
+    margin-top: 30px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+  }
+
+  input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #555;
+  }
+
+  .reviews {
+    margin-top: 30px;
+  }
+
+  .review-author {
+    margin-top: 30px;
+  }
+
+  .review-status {
+    margin-top: 10px;
+    font-style: italic;
+    color: #8a206a;
+  }
+
+  .review-rating {
+    margin-top: 10px;
+    color: #369413;
+    font-style: bold;
+  }
+
+  .review-text {
+    margin-top: 10px;
+  }
+  </style>
   <jsp:include page="fragments/header.jsp"/>
 </head>
 <body>
 
-  <h1>Movie</h1>
+  <div class="container">
 
-  <h2>Title</h2>
-  <c:out value="${movie.name}"></c:out>
+      <div class="header">
+        <h1><c:out value="${movie.name}"></c:out></h1>
+      </div>
 
-  <h2>Poster</h2>
-  <img src="${movie.poster}"></img>
+      <div class="content">
 
-  <h2>Description</h2>
-  <c:out value="${movie.description}"></c:out>
+          <h2>Poster</h2>
+            <img src="${movie.image}"></img>
 
-  <h2>Average Rating</h2>
-  <c:out value="${movie.averageRating}"></c:out>
+          <h2>Description</h2>
+            <c:out value="${movie.description}"></c:out>
 
-  <h2>Your Ratings</h2>
+          <h2>Average Rating</h2>
+            <c:out value="${movie.averageRating}"></c:out>
 
-  <div id="rating">
-    <div class="star" data-rating="1"></div>
-    <div class="star" data-rating="2"></div>
-    <div class="star" data-rating="3"></div>
-    <div class="star" data-rating="4"></div>
-    <div class="star" data-rating="5"></div>
-  </div>
+          <hr style="width: 200px; margin: auto; color: gray;">
 
-  <form action="/add-review" method="post">
-      <input type="text" name="author" placeholder="Enter your name">
-      <textarea name="text" placeholder="Enter your review"></textarea>
-      <input type="number" name="rating" min="1" max="5" placeholder="Rating">
-      <input type="submit" value="Submit Review">
-    </form>
+          <div class="review">
+            <c:if test="${sessionScope.user != null}">
+                <form action="${pageContext.request.contextPath}/movie-rate?command=addFeedback&movieId=${movie.id}" method="post">
+                <textarea type="text" name="content" value="${feedback.content}" placeholder="Enter the content"></textarea>
+                  <div>
+                    <label for="rating">Rating:</label>
+                    <input type="number" name="rating" value="${feedback.rating}" min="1" max="10" placeholder="Rating">
+                  </div>
 
-  <h2>Reviews</h2>
-
-  <c:forEach items="${movie.reviews}" var="review">
-    <h3>Review from ${review.author}</h3>
-    <c:out value="${review.text}"></c:out>
-    <p>Rating: ${review.rating}</p>
-  </c:forEach>
+                  <div>
+                    <input type="submit" value="Add review">
+                  </div>
+                </form>
+                <hr style="width: 200px; margin: auto; color: gray;">
+              </c:if>
+          </div>
 
 
+        <div class="reviews">
+          <h2><c:out value="${movie.feedbackAmount}"></c:out> reviews</h2>
 
+            <c:forEach items="${reviews}" var="review">
+              <div class="review-author">
+                <h3>Review from ${review.user.nickname}</h3>
+              </div>
+
+              <div class="review-status">
+                <c:out value="${review.status.name}"></c:out>
+              </div>
+
+              <div class="review-rating">
+                <p>Rating: ${review.feedback.rating}</p>
+              </div>
+
+              <div class="review-text">
+                <c:out value="${review.feedback.content}"></c:out>
+              </div>
+              <hr style="width: 200px; margin: auto; color: gray;">
+            </c:forEach>
+        </div>
+
+      </div>
+
+    </div>
 </body>
 </html>

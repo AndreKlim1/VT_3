@@ -6,6 +6,7 @@ public final class CommandName {
     public static final String GO_PROFILE_COMMAND = "goProfile";
     public static final String GO_MOVIE_INFO_COMMAND = "goMovieInfo";
     public static final String GO_ADD_MOVIE_COMMAND ="goAddMovie";
+    public static final String GO_CHANGE_MOVIE_COMMAND ="goChangeMovie";
     public static final String GO_LOG_IN_COMMAND = "goLogIn";
     public static final String GO_LOG_UP_COMMAND = "goLogUp";
 

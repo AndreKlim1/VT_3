@@ -48,9 +48,10 @@ public class GoToProfileCommand implements Command {
             FeedbackService feedbackService = ServiceFactory.getInstance().getFeedbackService();
             List<Feedback> feedbacks = feedbackService.retrieveFeedbackByUserId(user.getId());
             MovieService movieService = ServiceFactory.getInstance().getMovieService();
-            List<Movie> movies = new ArrayList<Movie>();
+            List<Movie> movies = new ArrayList<>();
             for(Feedback feedback : feedbacks){
-                movies.add(movieService.retrieveMovieById(feedback.getMovieId()).get());
+                Optional<Movie> movie = movieService.retrieveMovieById(feedback.getMovieId());
+                movies.add(movie.get());
             }
             requestContext.addRequestAttribute(MOVIES, movies);
 
