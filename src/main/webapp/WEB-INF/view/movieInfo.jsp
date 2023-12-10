@@ -122,23 +122,28 @@
           <h2>Average Rating</h2>
             <c:out value="${movie.averageRating}"></c:out>
 
-          <hr style="width: 200px; margin: auto; color: gray;">
+          <hr style="size: 10px; width: 1600px; margin: auto; color: gray;">
 
           <div class="review">
             <c:if test="${sessionScope.user != null}">
-                <form action="${pageContext.request.contextPath}/movie-rate?command=addFeedback&movieId=${movie.id}" method="post">
-                <textarea type="text" name="content" value="${feedback.content}" placeholder="Enter the content"></textarea>
+              <c:if test="${sessionScope.user.banned != true}">
+
+                <form <c:if test="${feedback == null}">action="${pageContext.request.contextPath}/movie-rate?command=addFeedback&movieId=${movie.id}"</c:if>
+                      <c:if test="${feedback != null}">action="${pageContext.request.contextPath}/movie-rate?command=changeFeedback&movieId=${movie.id}"</c:if>
+                      method="post">
+                <textarea type="text" name="content" placeholder="Enter the content"><c:out value="${feedback.content}"></c:out></textarea>
                   <div>
                     <label for="rating">Rating:</label>
                     <input type="number" name="rating" value="${feedback.rating}" min="1" max="10" placeholder="Rating">
                   </div>
 
                   <div>
-                    <input type="submit" value="Add review">
+                    <input type="submit" value="Leave review">
                   </div>
                 </form>
-                <hr style="width: 200px; margin: auto; color: gray;">
+                <hr style="size: 10px; width: 1600px; margin: auto; color: gray;">
               </c:if>
+            </c:if>
           </div>
 
 
@@ -146,12 +151,21 @@
           <h2><c:out value="${movie.feedbackAmount}"></c:out> reviews</h2>
 
             <c:forEach items="${reviews}" var="review">
+              <hr style="size: 10px; width: 800px; margin: auto; color: gray;">
               <div class="review-author">
                 <h3>Review from ${review.user.nickname}</h3>
               </div>
 
               <div class="review-status">
-                <c:out value="${review.status.name}"></c:out>
+              <div class="dropdown">
+                <button class="dropbtn"><c:out value="${review.status.name}"></c:out></button>
+                <div class="dropdown-content">
+                <c:forEach items="${statuses}" var="status">
+                  <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goMovieInfo&movieId=${movie.id}&statusId=${status.id}&userId=${review.user.id}"><c:out value="${status.name}"></c:out></a>
+                </c:forEach>
+                </div>
+              </div>
+
               </div>
 
               <div class="review-rating">
@@ -161,7 +175,11 @@
               <div class="review-text">
                 <c:out value="${review.feedback.content}"></c:out>
               </div>
-              <hr style="width: 200px; margin: auto; color: gray;">
+
+              <div class="ban-container">
+                <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=banUser&userId=${review.user.id}">Log out</a>
+              </div>
+
             </c:forEach>
         </div>
 

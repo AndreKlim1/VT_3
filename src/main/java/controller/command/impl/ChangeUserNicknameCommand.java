@@ -24,10 +24,11 @@ public class ChangeUserNicknameCommand implements Command {
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
         RequestContext requestContext = helper.createContext();
+        User user;
 
         try{
             String nickname = requestContext.getRequestParameter(NICKNAME);
-            User user = (User) requestContext.getSessionAttribute(USER);
+            user = (User) requestContext.getSessionAttribute(USER);
             UserService userService = ServiceFactory.getInstance().getUserService();
             userService.updateUserNicknameById(user.getId(), nickname);
 
@@ -35,7 +36,7 @@ public class ChangeUserNicknameCommand implements Command {
             return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
         }
 
-
+        requestContext.addSessionAttribute(USER, user);
         helper.updateRequest(requestContext);
         return new CommandResult(PAGE, CommandResultType.FORWARD);
     }

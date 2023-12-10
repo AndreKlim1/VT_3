@@ -6,37 +6,69 @@
     <meta charset="UTF-8">
     <title>Main</title>
     <style>
-    body {
-        font-family: "Roboto", sans-serif;
-    }
-
-    .main-container {
-        width: 400px;
-        margin: 0 auto;
-    }
     .movies-list {
-        margin-top: 20px;
-    }
+        font-family: Arial, Helvetica, sans-serif;
+         margin: 20px;
+         }
 
-    .movies-list h2 {
-        margin-bottom: 20px;
+    .movies-list h1 {
+        text-align: center;
+        font-size: 36px;
+
     }
 
     .movies-list ul {
-        list-style-type: none;
-        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
 
     .movies-list li {
-        margin-bottom: 10px;
+        width: 300px;
+        height: 400px;
+        margin: 10px;
+        border: 1px solid black;
+        box-shadow: 5px 5px 10px grey;
+        position: relative;
     }
 
-    .movies-list li img {
-        width: 100px;
+    .movies-list img {
+        width: 100%;
+        height: 80%;
+        object-fit: cover;
     }
 
-    .movies-list li p {
-        margin-top: 10px;
+    .movies-list p {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        margin: 2px;
+    }
+
+    .movies-list h2 {
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+        margin: 2px;
+        color: #166958;
+    }
+
+    .movies-list a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .nav-link {
+        font-size: 18px;
+        display: block;
+        text-align: center;
+        margin: 5px;
+    }
+
+    li:hover {
+        transform: scale(1.1);
+        transition: 0.5s;
     }
     </style>
     <jsp:include page="fragments/header.jsp"/>
@@ -56,8 +88,8 @@
                     <p>${movie.name}</p>
                     <c:if test="${sessionScope.user != null}">
                         <c:if test="${sessionScope.role.name == 'admin'}">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goChangeMovie&movieId=${movie.id}">Change movie</a>
-                            <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=deleteMovie=${movie.id}">Delete movie</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goChangeMovie&movieId=${movie.id}"><h2>Change movie</h2></a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=deleteMovie&movieId=${movie.id}"><h2>Delete movie</h2></a>
                         </c:if>
                     </c:if>
                 </li>

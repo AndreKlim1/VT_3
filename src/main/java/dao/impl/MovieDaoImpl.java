@@ -24,7 +24,7 @@ public class MovieDaoImpl extends AbstractDao<Movie> implements MovieDao {
     private static final String UPDATE_MOVIE_FEEDBACK_AMOUNT_BY_ID_QUERY = "UPDATE " + Table.MOVIE + " SET "+Column.MOVIE_FEEDBACK_AMOUNT+"=? WHERE "+Column.ID+"=?";
     private static final String SAVE_MOVIE_QUERY = "INSERT INTO " + Table.MOVIE + " ("+Column.MOVIE_NAME+", "+Column.MOVIE_DESCRIPTION+", "+Column.MOVIE_IMAGE+", "+ Column.MOVIE_AVERAGE_RATING+", "+Column.MOVIE_FEEDBACK_AMOUNT+", "+Column.MOVIE_RATED_ENOUGH+") VALUES (?, ?, ?, ?, ?, ?)";
 
-    private static final String UPDATE_MOVIE_BY_ID_QUERY = "UPDATE " + Table.MOVIE + " SET "+Column.MOVIE_NAME+"=? "+Column.MOVIE_DESCRIPTION+"=? "+Column.MOVIE_IMAGE+"=? "+ Column.MOVIE_AVERAGE_RATING+"=? "+Column.MOVIE_FEEDBACK_AMOUNT+"=? "+Column.MOVIE_RATED_ENOUGH+"=? WHERE "+Column.ID+"=?";
+    private static final String UPDATE_MOVIE_BY_ID_QUERY = "UPDATE " + Table.MOVIE + " SET "+Column.MOVIE_NAME+"=?, "+Column.MOVIE_DESCRIPTION+"=?, "+Column.MOVIE_IMAGE+"=?, "+ Column.MOVIE_AVERAGE_RATING+"=?, "+Column.MOVIE_FEEDBACK_AMOUNT+"=?, "+Column.MOVIE_RATED_ENOUGH+"=? WHERE "+Column.ID+"=?";
     private static final String UPDATE_MOVIE_RATED_ENOUGH_BY_ID_QUERY = "UPDATE " + Table.MOVIE + " SET "+Column.MOVIE_RATED_ENOUGH+"=? WHERE "+Column.ID+"=?";
     public MovieDaoImpl() {
         super(RowMapperFactory.getInstance().getMovieRowMapper(), Table.MOVIE);

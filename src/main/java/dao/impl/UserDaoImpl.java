@@ -19,7 +19,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_USER_BY_NICKNAME_QUERY = "SELECT * FROM " + Table.USER + " WHERE "+Column.USER_NICKNAME+"=?";
     private static final String UPDATE_USER_NICKNAME_BY_ID_QUERY = "UPDATE " + Table.USER + " SET "+Column.USER_NICKNAME+"=? WHERE "+Column.ID+"=?";
 
-    private static final String UPDATE_USER_SCORE_BY_ID_QUERY = "UPDATE " + Table.USER + " SET "+Column.USER_SCORE+"=? "+Column.STATUS_ID+"=? WHERE "+Column.ID+"=?";
+    private static final String UPDATE_USER_SCORE_AND_STATUS_BY_ID_QUERY = "UPDATE " + Table.USER + " SET "+Column.USER_SCORE+"=?, "+Column.STATUS_ID+"=? WHERE "+Column.ID+"=?";
 
     private static final String UPDATE_USER_STATUS_ID_BY_ID_QUERY = "UPDATE " + Table.USER + " SET "+Column.STATUS_ID+"=? WHERE "+Column.ID+"=?";
 
@@ -53,7 +53,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public void updateScoreAndStatusById(int id, int score, int statusId) throws DaoException {
-        executeUpdateQuery(UPDATE_USER_SCORE_BY_ID_QUERY, score, statusId, id);
+        executeUpdateQuery(UPDATE_USER_SCORE_AND_STATUS_BY_ID_QUERY, score, statusId, id);
     }
 
     @Override

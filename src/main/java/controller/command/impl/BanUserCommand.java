@@ -13,7 +13,7 @@ import service.api.UserService;
 
 public class BanUserCommand implements Command {
 
-    private static final String PAGE = "command="+ CommandName.GO_MAIN_COMMAND;
+    private static final String PAGE = "command="+ CommandName.GO_MOVIE_INFO_COMMAND;
     private static final String USER_ID = "userId";
     private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
     @Override
@@ -26,8 +26,8 @@ public class BanUserCommand implements Command {
         } catch (ServiceException e) {
             return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
         }
-
+        String movieId = requestContext.getRequestParameter("movieId");
         helper.updateRequest(requestContext);
-        return new CommandResult(PAGE, CommandResultType.REDIRECT);
+        return new CommandResult(PAGE + "&movieId=" + movieId, CommandResultType.REDIRECT);
     }
 }

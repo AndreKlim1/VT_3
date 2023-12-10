@@ -40,6 +40,16 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
+    public List<Status> retrieveAllStatuses() throws ServiceException {
+        try {
+            StatusDao statusDao= DaoFactory.getInstance().getStatusDao();
+            return statusDao.findAll();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public Optional<Status> retrieveStatusByScore(int score) throws ServiceException {
         try {
             StatusDao statusDao = DaoFactory.getInstance().getStatusDao();

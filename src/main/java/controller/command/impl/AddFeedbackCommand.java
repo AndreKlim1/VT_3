@@ -38,20 +38,22 @@ public class AddFeedbackCommand implements Command {
 
         Optional<String> stringRating = Optional.ofNullable(requestContext.getRequestParameter(RATING));
         Optional<String> content = Optional.ofNullable(requestContext.getRequestParameter(CONTENT));
+        int movieId = Integer.parseInt(requestContext.getRequestParameter(MOVIE_ID));
 
         try {
             if (stringRating.isPresent() && content.isPresent()) {
-                int movieId = Integer.parseInt(requestContext.getRequestParameter(MOVIE_ID));
+
                 User user = (User) requestContext.getSessionAttribute(USER);
                 int userId = user.getId();
                 FeedbackService feedbackService = ServiceFactory.getInstance().getFeedbackService();
                 boolean result = feedbackService.addNewFeedback(stringRating.get(), content.get(), userId, movieId);
 
                 MovieService movieService = ServiceFactory.getInstance().getMovieService();
+                boolean enoughAmount = movieService.updateMovieFeedbackAmountById(movieId);
                 movieService.updateMovieAverageRatingById(movieId);
                 UserService userService = ServiceFactory.getInstance().getUserService();
 
-                if(movieService.updateMovieFeedbackAmountById(movieId)){
+                if(enoughAmount){
                     List<Feedback> feedbacks = feedbackService.retrieveFeedbackByMovieId(movieId);
                     for (Feedback feedback : feedbacks){
                         int addedScore = movieService.calcUserScoreByMovieId(movieId, feedback.getRating());
@@ -72,6 +74,6 @@ public class AddFeedbackCommand implements Command {
         }
 
         helper.updateRequest(requestContext);
-        return new CommandResult(PAGE + MESSAGE_PARAMETER + message, CommandResultType.REDIRECT);
+        return new CommandResult(PAGE + MESSAGE_PARAMETER + message + "&" +MOVIE_ID +"=" + Integer.toString(movieId), CommandResultType.REDIRECT);
     }
 }

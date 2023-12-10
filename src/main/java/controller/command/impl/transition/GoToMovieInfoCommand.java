@@ -32,7 +32,7 @@ public class GoToMovieInfoCommand implements Command {
 
     private static final String FEEDBACK= "feedback";
     private static final String USER= "user";
-    private static final String STATUS= "status";
+    private static final String STATUSES= "statuses";
 
 
     @Override
@@ -67,8 +67,9 @@ public class GoToMovieInfoCommand implements Command {
             Optional<Feedback> feedback = feedbackService.retrieveFeedbackByUserAndMovieId(user.getId(), movieId);
             feedback.ifPresent(information -> requestContext.addRequestAttribute(FEEDBACK, information));
 
-            Optional<Status> status = statusService.retrieveStatusById(user.getStatusId());
-            status.ifPresent(information -> requestContext.addRequestAttribute(STATUS, information));
+            List<Status> statuses = statusService.retrieveAllStatuses();
+            requestContext.addRequestAttribute(STATUSES, statuses);
+
 
         } catch (ServiceException e) {
             return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);

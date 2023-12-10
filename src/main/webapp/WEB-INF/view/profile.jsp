@@ -4,6 +4,56 @@
 <html>
 <head>
     <title>Profile</title>
+    <style>
+    body {
+          background-color: #f2f2f2;
+          font-family: 'Open Sans', sans-serif;
+          font-size: 16px;
+        }
+
+        input[type="text"] {
+          border-radius: 10px;
+          border: none;
+          padding: 10px;
+          background-color: #f5f5f5;
+        }
+
+        button[type="submit"] {
+          border-radius: 10px;
+          border: none;
+          padding: 10px 20px;
+          background-color: #333;
+          color: #fff;
+        }
+
+        .movies-list li {
+          list-style: none;
+          margin-bottom: 20px;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+    .logout-container {
+        margin-top: 20px;
+    }
+
+    .logout-container a {
+        width: 100%;
+        height: 40px;
+        border-radius: 5px;
+        background-color: red;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .logout-container a:hover {
+        background-color: white;
+        border: 1px solid red;
+        color: red;
+    }
+    </style>
     <jsp:include page="fragments/header.jsp"/>
 
 </head>
@@ -16,17 +66,18 @@
           <h1>Profile</h1>
 
           <div class="left-info">
-              <div class="nickname-container">
+              <form action="${pageContext.request.contextPath}/movie-rate?command=changeNickname" method="post">
                   <input type="text" name="nickname" value="${sessionScope.user.nickname}" placeholder="Enter new nickname">
-                  <button type="submit">Confirm</button>
-              </div>
+                  <input type="submit" value="Change nickname">
+              </form>
+
 
               <div class="email-container">
                   <p>Email: <c:out value="${sessionScope.user.email}"/></p>
               </div>
 
               <div class="logout-container">
-                  <a href="logout">Log out</a>
+                  <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=logOut">Log out</a>
               </div>
           </div>
 
@@ -37,7 +88,6 @@
 
               <div class="score-container">
                   <p>Current score: <c:out value="${sessionScope.user.score}"/></p>
-                  <p>Points to next status: <c:out value="${status.score}"/></p>
               </div>
           </div>
       </div>
@@ -45,17 +95,14 @@
       <div class="movies-list">
 
           <h2>Movie list</h2>
-
-           <ul>
-              <c:forEach items="${movies}" var="movie">
-                  <li>
-                      <a href="${movie.image}">
-                          <img src="${movie.image}" alt="${movie.name}">
-                      </a>
-                      <p><c:out value=${movie.name}/></p>
-                  </li>
-              </c:forEach>
-          </ul>
+            <c:forEach items="${movies}" var="movie">
+                <li>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goMovieInfo&movieId=${movie.id}">
+                        <img src="${movie.image}" alt="${movie.name}">
+                    </a>
+                    <p>${movie.name}</p>
+                </li>
+            </c:forEach>
 
       </div>
 
