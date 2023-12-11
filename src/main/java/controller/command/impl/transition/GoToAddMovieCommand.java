@@ -1,22 +1,23 @@
 package controller.command.impl.transition;
 
-import controller.command.Command;
-import controller.command.CommandResult;
-import controller.command.CommandResultType;
+
 import controller.context.RequestContext;
 import controller.context.RequestContextHelper;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-public class GoToAddMovieCommand implements Command {
+@Controller
+public class GoToAddMovieCommand {
 
-    private static final String PAGE = "WEB-INF/view/addMovie.jsp";
+    private static final String PAGE = "addMovie";
 
-    @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        RequestContext requestContext = helper.createContext();
+    @RequestMapping(value = "/goAddMovie", method = RequestMethod.GET)
+    public String execute(ModelMap modelMap) {
 
-
-        helper.updateRequest(requestContext);
-        return new CommandResult(PAGE, CommandResultType.FORWARD);
+        return PAGE;
     }
 }

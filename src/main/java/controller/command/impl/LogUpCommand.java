@@ -1,21 +1,25 @@
 package controller.command.impl;
 
-import controller.command.Command;
-import controller.command.CommandResult;
-import controller.command.CommandResultType;
+
 import controller.context.RequestContext;
 import controller.context.RequestContextHelper;
 import exceptions.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.ServiceFactory;
 import service.api.UserService;
 
 import java.util.Optional;
 
-public class LogUpCommand implements Command {
-    private static final String LOG_UP_PAGE = "WEB-INF/view/logup.jsp";
-    private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
+@Controller
+public class LogUpCommand{
+    private static final String PAGE = "logup";
+    private static final String ERROR_PAGE = "error";
     private static final String EMAIL = "email";
     private static final String PASSWORD_FIRST = "password-first";
     private static final String PASSWORD_SECOND = "password-second";
@@ -24,15 +28,10 @@ public class LogUpCommand implements Command {
     private static final String ERROR = "error";
     private static final String OK = "ok";
 
-    @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        RequestContext requestContext = helper.createContext();
-        String message = ERROR;
+    @RequestMapping(value = "/logup", method = RequestMethod.GET)
+    public String execute(@RequestParam(EMAIL) Optional<String> email, @RequestParam(PASSWORD_FIRST) Optional<String> passwordFirst, @RequestParam(PASSWORD_SECOND) Optional<String> passwordSecond, @RequestParam(NICKNAME) Optional<String> nickname, Model model) {
 
-        Optional<String> email = Optional.ofNullable(requestContext.getRequestParameter(EMAIL));
-        Optional<String> passwordFirst = Optional.ofNullable(requestContext.getRequestParameter(PASSWORD_FIRST));
-        Optional<String> passwordSecond = Optional.ofNullable(requestContext.getRequestParameter(PASSWORD_SECOND));
-        Optional<String> nickname = Optional.ofNullable(requestContext.getRequestParameter(NICKNAME));
+        String message = ERROR;
 
         try {
             if (email.isPresent() && passwordFirst.isPresent() && passwordSecond.isPresent() &&
@@ -44,11 +43,11 @@ public class LogUpCommand implements Command {
                 }
             }
         } catch (ServiceException e) {
-            return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
+            return ERROR_PAGE;
         }
-
-        requestContext.addRequestAttribute(MESSAGE, message);
-        helper.updateRequest(requestContext);
-        return new CommandResult(LOG_UP_PAGE, CommandResultType.REDIRECT);
+        model.addAttribute(MESSAGE, message);
+        return PAGE;
     }
+
+
 }

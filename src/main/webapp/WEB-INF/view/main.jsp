@@ -82,14 +82,14 @@
         <ul>
             <c:forEach items="${movies}" var="movie">
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goMovieInfo&movieId=${movie.id}">
+                    <a class="nav-link" href="/goMovieInfo&movieId=${movie.id}">
                         <img src="${movie.image}" alt="${movie.name}">
                     </a>
                     <p>${movie.name}</p>
                     <c:if test="${sessionScope.user != null}">
                         <c:if test="${sessionScope.role.name == 'admin'}">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goChangeMovie&movieId=${movie.id}"><h2>Change movie</h2></a>
-                            <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=deleteMovie&movieId=${movie.id}"><h2>Delete movie</h2></a>
+                            <a class="nav-link" href="/goChangeMovie&movieId=${movie.id}"><h2>Change movie</h2></a>
+                            <a class="nav-link" href="/deleteMovie&movieId=${movie.id}"><h2>Delete movie</h2></a>
                         </c:if>
                     </c:if>
                 </li>

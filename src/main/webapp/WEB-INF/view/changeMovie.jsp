@@ -43,7 +43,7 @@
 
 <h1>Change movie</h1>
 
-<form action="${pageContext.request.contextPath}/movie-rate?command=changeMovie&movieId=${movie.id}" method="post">
+<form action="/changeMovie&movieId=${movie.id}" method="post">
 
     <div>
         <label for="name">Name:</label>

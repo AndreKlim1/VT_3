@@ -1,34 +1,34 @@
 package controller.command.impl;
 
-import controller.command.Command;
-import controller.command.CommandName;
-import controller.command.CommandResult;
-import controller.command.CommandResultType;
+
 import controller.context.RequestContext;
 import controller.context.RequestContextHelper;
 import exceptions.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.ServiceFactory;
 import service.api.MovieService;
 
-public class DeleteMovieCommand implements Command {
-    private static final String PAGE = "command="+ CommandName.GO_MAIN_COMMAND;
+@Controller
+public class DeleteMovieCommand {
+    private static final String PAGE = "redirect:goMain";
     private static final String MOVIE_ID = "movieId";
-    private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
+    private static final String ERROR_PAGE = "error";
 
-    @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        RequestContext requestContext = helper.createContext();
-
+    @RequestMapping(value = "/deleteMovie", method = RequestMethod.GET)
+    public String execute(@RequestParam(MOVIE_ID) int movieId, Model model) {
         try {
-            int movieId = Integer.parseInt(requestContext.getRequestParameter(MOVIE_ID));
             MovieService movieService = ServiceFactory.getInstance().getMovieService();
             movieService.removeMovieById(movieId);
         } catch (ServiceException e) {
-            return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
+            return ERROR_PAGE;
         }
 
-        helper.updateRequest(requestContext);
-        return new CommandResult(PAGE, CommandResultType.REDIRECT);
+        return PAGE;
     }
+
 }

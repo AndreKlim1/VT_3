@@ -1,39 +1,41 @@
 package controller.command.impl;
 
-import controller.command.Command;
-import controller.command.CommandResult;
-import controller.command.CommandResultType;
+
 import controller.context.RequestContext;
 import controller.context.RequestContextHelper;
 import entity.User;
 import exceptions.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.ServiceFactory;
 import service.api.UserService;
 
-public class ChangeUserStatusCommand implements Command {
+@Controller
+public class ChangeUserStatusCommand  {
 
-    private static final String PAGE = "WEB-INF/view/movie.jsp";
-    private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
+    private static final String PAGE = "movieInfo";
+    private static final String ERROR_PAGE = "error";
     private static final String STATUS_ID= "statusId";
     private static final String USER_ID= "userId";
+    private static final String MOVIE_ID= "movieId";
 
-    @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        RequestContext requestContext = helper.createContext();
+    @RequestMapping(value = "/changeUserStatus", method = RequestMethod.GET)
+    public String execute(@RequestParam(STATUS_ID) int statusId, @RequestParam(USER_ID) int userId, @RequestParam(MOVIE_ID) int movieId, Model model) {
 
         try{
-            int statusId = Integer.parseInt(requestContext.getRequestParameter(STATUS_ID));
-            int userId = Integer.parseInt(requestContext.getRequestParameter(USER_ID));
+
             UserService userService = ServiceFactory.getInstance().getUserService();
             userService.updateUserStatusById(userId, statusId);
 
         } catch (ServiceException e) {
-            return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
+            return ERROR_PAGE;
         }
 
-        String movieId = requestContext.getRequestParameter("movieId");
-        helper.updateRequest(requestContext);
-        return new CommandResult(PAGE + "&movieId=" + movieId, CommandResultType.FORWARD);
+        return PAGE + "&movieId=" + movieId;
     }
+
 }

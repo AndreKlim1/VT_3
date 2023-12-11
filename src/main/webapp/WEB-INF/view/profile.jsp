@@ -66,7 +66,7 @@
           <h1>Profile</h1>
 
           <div class="left-info">
-              <form action="${pageContext.request.contextPath}/movie-rate?command=changeNickname" method="post">
+              <form action="/changeNickname" method="post">
                   <input type="text" name="nickname" value="${sessionScope.user.nickname}" placeholder="Enter new nickname">
                   <input type="submit" value="Change nickname">
               </form>
@@ -77,7 +77,7 @@
               </div>
 
               <div class="logout-container">
-                  <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=logOut">Log out</a>
+                  <a class="nav-link" href="/logout">Log out</a>
               </div>
           </div>
 
@@ -97,7 +97,7 @@
           <h2>Movie list</h2>
             <c:forEach items="${movies}" var="movie">
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goMovieInfo&movieId=${movie.id}">
+                    <a class="nav-link" href="/goMovieInfo&movieId=${movie.id}">
                         <img src="${movie.image}" alt="${movie.name}">
                     </a>
                     <p>${movie.name}</p>

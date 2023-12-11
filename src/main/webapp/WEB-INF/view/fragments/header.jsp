@@ -39,17 +39,17 @@
 <header>
   <h1>Cinema Site</h1>
 
-  <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goMain">Main</a>
+  <a class="nav-link" href="/goMain">Main</a>
   <c:if test="${sessionScope.user == null}">
-    <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goLogIn">LogIn</a>
-    <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goLogUp">SighUp</a>
+    <a class="nav-link" href="/goLogin">LogIn</a>
+    <a class="nav-link" href="/goLogup">SighUp</a>
   </c:if>
 
   <c:if test="${sessionScope.user != null}">
-    <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goProfile">Profile</a>
+    <a class="nav-link" href="/goProfile">Profile</a>
 
     <c:if test="${sessionScope.role.name == 'admin'}">
-      <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goAddMovie">Add movie</a>
+      <a class="nav-link" href="/goAddMovie">Add movie</a>
     </c:if>
 
   </c:if>

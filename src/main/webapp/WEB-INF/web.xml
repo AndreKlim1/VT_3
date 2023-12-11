@@ -6,13 +6,16 @@
 
 
     <servlet>
-        <servlet-name>main</servlet-name>
-        <servlet-class>controller.Controller</servlet-class>
+        <servlet-name>MovieRate</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>main</servlet-name>
-        <url-pattern>/movie-rate</url-pattern>
+        <servlet-name>MovieRate</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <request-character-encoding>UTF-8</request-character-encoding>

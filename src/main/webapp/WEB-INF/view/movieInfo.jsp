@@ -128,8 +128,8 @@
             <c:if test="${sessionScope.user != null}">
               <c:if test="${sessionScope.user.banned != true}">
 
-                <form <c:if test="${feedback == null}">action="${pageContext.request.contextPath}/movie-rate?command=addFeedback&movieId=${movie.id}"</c:if>
-                      <c:if test="${feedback != null}">action="${pageContext.request.contextPath}/movie-rate?command=changeFeedback&movieId=${movie.id}"</c:if>
+                <form <c:if test="${feedback == null}">action="/addFeedback&movieId=${movie.id}"</c:if>
+                      <c:if test="${feedback != null}">action="/changeFeedback&movieId=${movie.id}"</c:if>
                       method="post">
                 <textarea type="text" name="content" placeholder="Enter the content"><c:out value="${feedback.content}"></c:out></textarea>
                   <div>
@@ -161,7 +161,7 @@
                 <button class="dropbtn"><c:out value="${review.status.name}"></c:out></button>
                 <div class="dropdown-content">
                 <c:forEach items="${statuses}" var="status">
-                  <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=goMovieInfo&movieId=${movie.id}&statusId=${status.id}&userId=${review.user.id}"><c:out value="${status.name}"></c:out></a>
+                  <a class="nav-link" href="/changeUserStatus&movieId=${movie.id}&statusId=${status.id}&userId=${review.user.id}"><c:out value="${status.name}"></c:out></a>
                 </c:forEach>
                 </div>
               </div>
@@ -177,7 +177,7 @@
               </div>
 
               <div class="ban-container">
-                <a class="nav-link" href="${pageContext.request.contextPath}/movie-rate?command=banUser&userId=${review.user.id}">Log out</a>
+                <a class="nav-link" href="/banUser&userId=${review.user.id}">Log out</a>
               </div>
 
             </c:forEach>

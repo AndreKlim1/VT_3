@@ -1,21 +1,24 @@
 package controller.command.impl.transition;
 
-import controller.command.Command;
-import controller.command.CommandResult;
-import controller.command.CommandResultType;
 import controller.context.RequestContext;
 import controller.context.RequestContextHelper;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-public class GoToLogInCommand implements Command {
 
-    private static final String PAGE = "WEB-INF/view/login.jsp";
+@Controller
+public class GoToLogInCommand {
 
-    @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        RequestContext requestContext = helper.createContext();
+    private static final String PAGE = "login";
 
-        helper.updateRequest(requestContext);
-        return new CommandResult(PAGE, CommandResultType.FORWARD);
+    @RequestMapping(value = "/goLogin", method = RequestMethod.GET)
+    public String execute(Model model) {
+
+        return PAGE;
     }
 }

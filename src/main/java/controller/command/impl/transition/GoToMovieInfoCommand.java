@@ -1,8 +1,6 @@
 package controller.command.impl.transition;
 
-import controller.command.Command;
-import controller.command.CommandResult;
-import controller.command.CommandResultType;
+
 import entity.Review;
 import controller.context.RequestContext;
 import controller.context.RequestContextHelper;
@@ -12,6 +10,12 @@ import entity.Status;
 import entity.User;
 import exceptions.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.ServiceFactory;
 import service.api.FeedbackService;
 import service.api.MovieService;
@@ -21,11 +25,11 @@ import service.api.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+@Controller
+public class GoToMovieInfoCommand {
 
-public class GoToMovieInfoCommand implements Command {
-
-    private static final String PAGE = "WEB-INF/view/movieInfo.jsp";
-    private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
+    private static final String PAGE = "movieInfo";
+    private static final String ERROR_PAGE = "error";
     private static final String MOVIE_ID= "movieId";
     private static final String MOVIE= "movie";
     private static final String REVIEWS = "reviews";
@@ -34,16 +38,13 @@ public class GoToMovieInfoCommand implements Command {
     private static final String USER= "user";
     private static final String STATUSES= "statuses";
 
-
-    @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        RequestContext requestContext = helper.createContext();
+    @RequestMapping(value = "/goMovieInfo", method = RequestMethod.GET)
+    public String execute(@RequestParam(MOVIE_ID) int movieId, Model model, HttpSession session) {
 
         try{
-            int movieId = Integer.parseInt(requestContext.getRequestParameter(MOVIE_ID));
             MovieService movieService = ServiceFactory.getInstance().getMovieService();
             Optional<Movie> movie = movieService.retrieveMovieById(movieId);
-            movie.ifPresent(information -> requestContext.addRequestAttribute(MOVIE, information));
+            movie.ifPresent(information -> model.addAttribute(MOVIE, information));
 
             FeedbackService feedbackService = ServiceFactory.getInstance().getFeedbackService();
             List<Feedback> feedbacks = feedbackService.retrieveFeedbackByMovieId(movieId);
@@ -56,27 +57,25 @@ public class GoToMovieInfoCommand implements Command {
                 User user = userService.retrieveUserById(feedback.getUserId()).get();
                 reviews.add(new Review(id, feedback, user, statusService.retrieveStatusById(user.getStatusId()).get()));
             }
-            requestContext.addRequestAttribute(REVIEWS, reviews);
+            model.addAttribute(REVIEWS, reviews);
 
-            User user = (User) requestContext.getSessionAttribute(USER);
+            User user = (User) session.getAttribute(USER);
             if (user == null) {
-                helper.updateRequest(requestContext);
-                return new CommandResult(PAGE, CommandResultType.FORWARD);
+
+                return PAGE;
             }
 
             Optional<Feedback> feedback = feedbackService.retrieveFeedbackByUserAndMovieId(user.getId(), movieId);
-            feedback.ifPresent(information -> requestContext.addRequestAttribute(FEEDBACK, information));
+            feedback.ifPresent(information -> model.addAttribute(FEEDBACK, information));
 
             List<Status> statuses = statusService.retrieveAllStatuses();
-            requestContext.addRequestAttribute(STATUSES, statuses);
+            model.addAttribute(STATUSES, statuses);
 
 
         } catch (ServiceException e) {
-            return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
+            return ERROR_PAGE;
         }
 
-
-        helper.updateRequest(requestContext);
-        return new CommandResult(PAGE, CommandResultType.FORWARD);
+        return PAGE;
     }
 }

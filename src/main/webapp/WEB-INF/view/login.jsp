@@ -42,7 +42,7 @@
 </head>
 <body>
   <h1>Login</h1>
-  <form action="${pageContext.request.contextPath}/movie-rate?command=logIn" method="post">
+  <form action="/login" method="post">
     <input type="email" name="email" placeholder="Email">
     <input type="password" name="password" placeholder="Password" minlength="8">
     <input type="submit" value="Login">

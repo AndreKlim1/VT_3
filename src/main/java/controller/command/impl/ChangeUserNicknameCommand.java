@@ -1,43 +1,44 @@
 package controller.command.impl;
 
-import controller.command.Command;
-import controller.command.CommandResult;
-import controller.command.CommandResultType;
 import controller.context.RequestContext;
 import controller.context.RequestContextHelper;
 import entity.Movie;
 import entity.User;
 import exceptions.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import service.ServiceFactory;
 import service.api.MovieService;
 import service.api.UserService;
 
 import java.util.List;
 
-public class ChangeUserNicknameCommand implements Command {
-    private static final String PAGE = "WEB-INF/view/profile.jsp";
-    private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
+@Controller
+public class ChangeUserNicknameCommand{
+    private static final String PAGE = "profile";
+    private static final String ERROR_PAGE = "error";
     private static final String NICKNAME= "nickname";
     private static final String USER= "user";
 
-    @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        RequestContext requestContext = helper.createContext();
+    @RequestMapping(value = "/changeUserNickname", method = RequestMethod.POST)
+    public String execute(@RequestParam(NICKNAME) String nickname, Model model, HttpSession session) {
         User user;
 
         try{
-            String nickname = requestContext.getRequestParameter(NICKNAME);
-            user = (User) requestContext.getSessionAttribute(USER);
+            user = (User) session.getAttribute(USER);
             UserService userService = ServiceFactory.getInstance().getUserService();
             userService.updateUserNicknameById(user.getId(), nickname);
 
         } catch (ServiceException e) {
-            return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
+            return ERROR_PAGE;
         }
 
-        requestContext.addSessionAttribute(USER, user);
-        helper.updateRequest(requestContext);
-        return new CommandResult(PAGE, CommandResultType.FORWARD);
+        session.setAttribute(USER, user);
+        return PAGE;
     }
 }

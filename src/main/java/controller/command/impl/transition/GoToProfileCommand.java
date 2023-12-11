@@ -1,8 +1,5 @@
 package controller.command.impl.transition;
 
-import controller.command.Command;
-import controller.command.CommandResult;
-import controller.command.CommandResultType;
 import controller.context.RequestContext;
 import controller.context.RequestContextHelper;
 import entity.Feedback;
@@ -11,6 +8,11 @@ import entity.Status;
 import entity.User;
 import exceptions.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import service.ServiceFactory;
 import service.api.FeedbackService;
 import service.api.MovieService;
@@ -19,23 +21,21 @@ import service.api.StatusService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+@Controller
+public class GoToProfileCommand {
 
-public class GoToProfileCommand implements Command {
-
-    private static final String PAGE = "WEB-INF/view/profile.jsp";
-    private static final String ERROR_PAGE = "WEB-INF/view/error.jsp";
+    private static final String PAGE = "profile";
+    private static final String ERROR_PAGE = "error";
     private static final String USER = "user";
     private static final String STATUS = "status";
     private static final String MOVIES = "movies";
 
-    @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        RequestContext requestContext = helper.createContext();
+    @RequestMapping(value = "/goProfile", method = RequestMethod.GET)
+    public String execute(Model model, HttpSession session) {
 
-        User user = (User) requestContext.getSessionAttribute(USER);
+        User user = (User) session.getAttribute(USER);
         if (user == null) {
-            helper.updateRequest(requestContext);
-            return new CommandResult(PAGE, CommandResultType.FORWARD);
+            return PAGE;
         }
 
         try {
@@ -43,7 +43,7 @@ public class GoToProfileCommand implements Command {
             StatusService statusService = ServiceFactory.getInstance().getStatusService();
 
             Optional<Status> status = statusService.retrieveStatusById(statusId);
-            status.ifPresent(information -> requestContext.addRequestAttribute(STATUS, information));
+            status.ifPresent(information -> model.addAttribute(STATUS, information));
 
             FeedbackService feedbackService = ServiceFactory.getInstance().getFeedbackService();
             List<Feedback> feedbacks = feedbackService.retrieveFeedbackByUserId(user.getId());
@@ -53,13 +53,13 @@ public class GoToProfileCommand implements Command {
                 Optional<Movie> movie = movieService.retrieveMovieById(feedback.getMovieId());
                 movies.add(movie.get());
             }
-            requestContext.addRequestAttribute(MOVIES, movies);
+            model.addAttribute(MOVIES, movies);
 
         } catch (ServiceException e) {
-            return new CommandResult(ERROR_PAGE, CommandResultType.FORWARD);
+            return ERROR_PAGE;
         }
 
-        helper.updateRequest(requestContext);
-        return new CommandResult(PAGE, CommandResultType.FORWARD);
+        return PAGE;
     }
+
 }

@@ -44,7 +44,7 @@
 
 <h1>Registration</h1>
 
-<form action="${pageContext.request.contextPath}/movie-rate?command=logUp" method="post">
+<form action="/logup" method="post">
 
     <div>
         <label for="nickname">Nickname:</label>
